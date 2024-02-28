@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ArrowRight } from '@nutui/icons-react'
 import Form, { FormInstance } from './index'
 import { Input } from '../input/input'
@@ -16,6 +16,79 @@ import Button from '@/packages/button'
 import InputNumber from '@/packages/inputnumber'
 import Picker from '@/packages/picker'
 import Uploader from '@/packages/uploader'
+
+const FormTestNode2 = () => {
+  const [form] = Form.useForm()
+  const authType = Form.useWatch('认证类型', form)
+
+  const FormItemNode = useCallback(() => {
+    if (authType === '个人') {
+      return (
+        <>
+          <Form.Item label="地址" name="address">
+            <Input className="nut-input-text" placeholder="地址" type="text" />
+          </Form.Item>
+          <Form.Item label="电话" name="phone">
+            <Input className="nut-input-text" placeholder="电话" type="text" />
+          </Form.Item>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <Form.Item label="经营地址" name="address">
+          <Input
+            className="nut-input-text"
+            placeholder="经营地址"
+            type="text"
+          />
+        </Form.Item>
+        <Form.Item label="经营电话" name="phone">
+          <Input
+            className="nut-input-text"
+            placeholder="经营电话"
+            type="text"
+          />
+        </Form.Item>
+      </>
+    )
+  }, [authType])
+
+  return (
+    <>
+      <div className="demo">
+        <Form form={form} divider labelPosition="right">
+          <Form.Item name="认证类型" rules={[{ required: true }]}>
+            <Radio.Group
+              direction="horizontal"
+              options={[
+                { label: '个人', value: '个人' },
+                { label: '个体户', value: '个体户' },
+                { label: '企业', value: '企业' },
+              ]}
+              style={{ display: 'flex', justifyContent: 'space-between' }}
+            />
+          </Form.Item>
+          <FormItemNode />
+        </Form>
+      </div>
+    </>
+  )
+}
+
+const UseWatchTestNode = () => {
+  const form = Form.useFormInstance()
+  // console.log({ form })
+  const username = Form.useWatch('username', null)
+
+  useEffect(() => {
+    // 当 'username' 字段的值发生变化时，这个效果会运行
+    console.log('Username changed:', username)
+  }, [username]) // 只有当 username 改变时，这个效果才会重新运行
+
+  return null
+}
 
 const FormDemo = () => {
   const [translated] = useTranslate({
