@@ -9,7 +9,7 @@ export type StoreValue = any
 export type NamePath = string | number
 
 export interface Callbacks<Values = any> {
-  onValuesChange?: (values: Values) => void
+  onValuesChange?: (changedValues: Values, allValues: Values) => void
   onFinish?: (values: Values) => void
   onFinishFailed?: (values: Values, errorFields: any) => void
 }

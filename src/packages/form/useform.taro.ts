@@ -29,6 +29,7 @@ class FormStore {
     this.callbacks = {
       onFinish: () => {},
       onFinishFailed: () => {},
+      onValuesChange: () => {},
     }
   }
 
@@ -86,6 +87,8 @@ class FormStore {
    * @param newStore { [name]: newValue }
    */
   setFieldsValue = (newStore: any) => {
+    // 获取新旧值
+    const prevStore = JSON.parse(JSON.stringify(this.store ?? {}))
     this.store = {
       ...this.store,
       ...newStore,
@@ -107,6 +110,16 @@ class FormStore {
         item.entity.onStoreChange('update')
       }
     })
+    const changedValues = Object.keys(newStore).reduce((acc: any, key) => {
+      if (newStore[key] !== prevStore[key]) {
+        acc[key] = newStore[key]
+      }
+      return acc
+    }, {})
+    // 触发 onValuesChange 回调
+    if (Object.keys(changedValues).length > 0) {
+      this.callbacks.onValuesChange!(changedValues, this.store)
+    }
   }
 
   setCallback = (callback: Callbacks) => {

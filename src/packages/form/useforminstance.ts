@@ -21,7 +21,7 @@ export const useFormInstance = (): FormInstance | null => {
     return context as FormInstance<any>
   }
   // 如果 context 不满足 FormInstance 的要求，则返回 null
-  console.error('The context does not implement the FormInstance interface.')
+  // console.error('The context does not implement the FormInstance interface.')
 
   return null
 }

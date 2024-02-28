@@ -16,6 +16,7 @@ export interface FormProps extends BasicComponent {
   starPosition: 'left' | 'right'
   onFinish: (values: any) => void
   onFinishFailed: (values: any, errorFields: any) => void
+  onValuesChange?: (changedValues: any, allValues: any) => void
 }
 
 const defaultProps = {
@@ -25,6 +26,7 @@ const defaultProps = {
   divider: false,
   onFinish: (values) => {},
   onFinishFailed: (values, errorFields) => {},
+  onValuesChange: (changedValues, allValues) => {},
 } as FormProps
 
 const PositionInfo: any = {
@@ -45,6 +47,7 @@ export const Form = React.forwardRef<FormInstance, Partial<FormProps>>(
       divider,
       onFinish,
       onFinishFailed,
+      onValuesChange,
       labelPosition,
       starPosition,
       form,
@@ -68,6 +71,7 @@ export const Form = React.forwardRef<FormInstance, Partial<FormProps>>(
     setCallback({
       onFinish,
       onFinishFailed,
+      onValuesChange,
     })
     // 初始化 initialValues 和 store
     const mountRef = React.useRef<boolean>(false)

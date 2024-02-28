@@ -37,5 +37,9 @@ module.exports = {
       })
     },
   },
-  h5: {},
+  h5: {
+    devServer: {
+      allowedHosts: 'all', // 允许所有主机名
+    },
+  },
 }

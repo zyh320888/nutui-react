@@ -203,6 +203,126 @@ export default App;
 ```
 
 :::
+### 字段值变化切换字段
+
+:::demo
+
+```tsx
+import React,{useState,useCallback} from "react";
+import { Form, Input, TextArea,Radio } from '@nutui/nutui-react-taro';
+
+
+const App = () => {
+  const [form] = Form.useForm()
+  const [authType, setAuthType] = useState('')
+
+  const FormItemNode = useCallback(() => {
+    if (authType === '个人') {
+      return (
+        <>
+          <Form.Item label="地址" name="address">
+            <Input className="nut-input-text" placeholder="地址" type="text" />
+          </Form.Item>
+          <Form.Item label="电话" name="phone">
+            <Input className="nut-input-text" placeholder="电话" type="text" />
+          </Form.Item>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <Form.Item label="经营地址" name="address">
+          <Input
+            className="nut-input-text"
+            placeholder="经营地址"
+            type="text"
+          />
+        </Form.Item>
+        <Form.Item label="经营电话" name="phone">
+          <Input
+            className="nut-input-text"
+            placeholder="经营电话"
+            type="text"
+          />
+        </Form.Item>
+      </>
+    )
+  }, [authType])
+
+  const onValuesChange = (changedValues: any, allValues: any) => {
+    if (changedValues?.认证类型) setAuthType(changedValues?.认证类型)
+  }
+
+  return (
+    <Form
+      form={form}
+      divider
+      labelPosition="right"
+      onValuesChange={onValuesChange}
+    >
+      <Form.Item name="认证类型" rules={[{ required: true }]}>
+        <Radio.Group
+          direction="horizontal"
+          options={[
+            { label: '个人', value: '个人' },
+            { label: '个体户', value: '个体户' },
+            { label: '企业', value: '企业' },
+          ]}
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        />
+      </Form.Item>
+      <FormItemNode />
+    </Form>
+  )
+}
+
+export default App;
+```
+
+:::
+
+### 监听字段值变化
+
+:::demo
+
+```tsx
+import React,{useEffect} from "react";
+import { Form,Radio } from '@nutui/nutui-react-taro';
+
+
+const App = () => {
+  const [form] = Form.useForm()
+  // console.log({ form })
+  const 认证类型 = Form.useWatch('认证类型', form) as any
+
+  useEffect(() => {
+    // 当 'username' 字段的值发生变化时，这个效果会运行
+    console.log('认证类型 changed:', 认证类型)
+  }, [认证类型]) // 只有当 username 改变时，这个效果才会重新运行
+
+  return (
+    <Form form={form} divider labelPosition="right">
+      <Form.Item name="认证类型" rules={[{ required: true }]}>
+        <Radio.Group
+          direction="horizontal"
+          options={[
+            { label: '个人', value: '个人' },
+            { label: '个体户', value: '个体户' },
+            { label: '企业', value: '企业' },
+          ]}
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        />
+      </Form.Item>
+      {认证类型}
+    </Form>
+  )
+}
+
+export default App;
+```
+
+:::
 ### 带有初始值表单校验
 
 :::demo

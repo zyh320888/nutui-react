@@ -20,6 +20,7 @@ export function useWatch<FormValues extends Store | any>(
 
     // 定义一个更新值的函数
     const updateValue = () => {
+      if (!formInstance) return
       if (Array.isArray(name))
         latestValue.current = formInstance.getFieldsValue(name) as FormValues
       else latestValue.current = formInstance.getFieldValue(name) as FormValues
@@ -38,7 +39,7 @@ export function useWatch<FormValues extends Store | any>(
       )
     // 组件卸载时移除监听器
     return () => unregister()
-  }, [form, name]) // 添加 forceUpdate 到依赖数组
+  }, [formInstance, name]) // 添加 forceUpdate 到依赖数组
 
   // 返回最新的值
   return latestValue.current
