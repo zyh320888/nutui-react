@@ -1,6 +1,6 @@
 {
-  "name": "@d8dcloud/nutui-react",
-  "version": "2.3.11.2",
+  "name": "@d8dcloud/nutui-react-taro",
+  "version": "2.3.11.3",
   "style": "dist/style.css",
   "main": "dist/nutui.react.umd.js",
   "module": "dist/esm/nutui-react.es.js",

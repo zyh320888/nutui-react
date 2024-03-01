@@ -232,7 +232,8 @@ export const Input = forwardRef(
           placeholder={placeholder || locale.placeholder}
           disabled={disabled || readOnly}
           value={value}
-          focus={autoFocus}
+          // focus={autoFocus}
+          {...(autoFocus ? { focus: autoFocus } : {})}
           confirmType={confirmType}
           onBlur={handleBlur}
           onFocus={handleFocus}
